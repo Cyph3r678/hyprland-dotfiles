@@ -1,0 +1,71 @@
+@define-color bg #191919;
+@define-color bg2 #202020;
+@define-color text #e8e8e8;
+@define-color accent #7769fa;
+@define-color border #232323;
+
+* { all: unset; }
+* { color:@text; font-family:Modulus Pro Semi Bold; }
+
+scrollbar { opacity:0; }
+
+.box-wrapper{
+  background-size: 600px;
+  background-image: url("file://walker-bg.png");
+  box-shadow: 0px 0px 15px 0px alpha(#000000, 1);
+  border-radius:10px;
+  border:4px solid @border;
+  padding:12px;
+}
+
+.search-container{
+  background:linear-gradient(
+          45deg,
+          alpha(#4a4a4a, 0.9) 0%,
+          @bg2 40%,
+          @bg2 60%,
+          alpha(#4a4a4a, 0.9) 100%
+          );
+  animation: gradient_f 8s ease-in-out infinite;
+  background-size: 300% 300%; 
+  border-radius:6px;
+  border:4px solid #272727;
+  padding:10px;
+}
+
+
+@keyframes gradient_f {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+child:hover .item-box{
+  background:@bg2;
+}
+
+child:selected .item-box{
+  background:@accent;
+  color:black;
+}
+
+.item-box{
+  color:@bg2;
+  padding:10px;
+  border-radius:6px;
+}
+
+/* Icon sizes */
+.normal-icons {
+    -gtk-icon-size: 50px;   /* Default icons in the list */
+}
+
+.large-icons {
+    -gtk-icon-size: 40px;   /* Larger icons (used in some providers/previews) */
+}
