@@ -1,0 +1,45 @@
+## Configuration file for CAVA.
+
+[general]
+framerate = 60
+sensitivity = 100
+bars = 0
+bar_width = 3
+bar_spacing = 1
+lower_cutoff_freq = 50
+higher_cutoff_freq = 10000
+
+[input]
+method = pipewire
+source = auto
+
+[output]
+method = ncurses
+channels = stereo
+
+[color]
+background = default
+gradient = 1
+gradient_count = 8
+gradient_color_1 = '#fa456c'   # red
+gradient_color_2 = '#eba86d'   # yellow
+gradient_color_3 = '#49bd7d'   # green
+gradient_color_4 = '#387bdf'   # aqua
+gradient_color_5 = '#7769fa'   # blue
+gradient_color_6 = '#944edf'   # purple
+gradient_color_7 = '#fa456c'   # red (loop)
+gradient_color_8 = '#eba86d'   # yellow (loop)
+
+[smoothing]
+integral = 77
+monstercat = 0
+waves = 0
+gravity = 100
+
+[eq]
+# You can uncomment and adjust these for EQ if you want
+; 1 = 1.0
+; 2 = 1.0
+; 3 = 1.0
+; 4 = 1.0
+; 5 = 1.0
