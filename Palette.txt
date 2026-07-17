@@ -1,0 +1,13 @@
+@define-color bg0 #191919;
+@define-color bg1 #202020;
+@define-color bg2 #232323;
+@define-color bg3 #272727;
+
+@define-color red #fa456c;
+@define-color yellow #eba86d;
+@define-color green #49bd7d;
+@define-color aqua #387bdf;
+@define-color blue #7769fa;
+@define-color purple #944edf;
+
+@define-color fg(text) #E8E8E8;
