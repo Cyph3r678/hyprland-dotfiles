@@ -7,12 +7,16 @@ Thanks for coming!
 
 <h1>Desktop</h1>
 
+
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/b526bed0-83a8-45dc-b6d2-9d51658af002" />
+
 
 
 <h1>Powermenu</h1>
 
+
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/af52308d-57c6-4288-aa95-74ada06cd41e" />
+
 
 
 <h1>Workspaces</h1>
