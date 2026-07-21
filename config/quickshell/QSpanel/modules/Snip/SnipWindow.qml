@@ -6,8 +6,7 @@ import QtQuick
 import "."
 
 // Fullscreen screenshot/screen-recording overlay for the currently
-// focused monitor, plus a separate fixed-bottom controls bar (see
-// SnipControlsWindow.qml). Toggled via shell.qml's IPC "snip" target:
+// focused monitor. Toggled via shell.qml's IPC "snip" target:
 //
 //   SnipWindow { id: snipWindow }
 //
@@ -22,14 +21,29 @@ import "."
 // PATH. Screenshots save to ~/Pictures/Screenshots, recordings to
 // ~/Videos.
 //
-// IMPORTANT: add this to hyprland.conf, or the controls bar will show
-// up baked into every recording:
-//   layerrule = no_screen_share on, match:namespace qspanel:snip-controls
+// IMPORTANT: add this to hyprland.conf - it targets the *recording*
+// controls bar's namespace specifically, NOT this window's:
+//   layerrule = no_screen_share on, match:namespace qspanel:snip-recording
+//
+// This window (namespace "qspanel:snip") deliberately does NOT get
+// that rule. no_screen_share excludes a surface's entire occupied
+// region from any screencopy, not just its own drawn pixels - since
+// this window is fullscreen, applying it here would black out the
+// whole capture (screenshot or recording), not just our own chrome.
+// Screenshots avoid needing it at all by fully hiding this window
+// before calling grim. Recording avoids it by handing off to a
+// completely separate, small, always-fixed-bottom window
+// (SnipRecordingBar.qml) the instant recording starts - which is only
+// ever mapped once THIS window has already fully unmapped, so there's
+// no stacking-order fight between two simultaneously-visible surfaces
+// either.
 PanelWindow {
     id: window
 
+    // Hidden either when the tool is fully closed, or once recording
+    // has taken over (SnipRecordingBar handles everything from there).
     property bool panelVisible: false
-    visible: panelVisible
+    visible: panelVisible && !recordingActive
 
     color: "transparent"
 
@@ -44,18 +58,6 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
     WlrLayershell.namespace: "qspanel:snip"
-
-    // Full-screen input while selecting; once recording is live, the
-    // selection UI is hidden entirely (see SnipOverlay below) and
-    // there's nothing left here to interact with - so shrink the
-    // mask to nothing and let clicks pass straight through to
-    // whatever's actually being recorded.
-    mask: Region {
-        x: 0
-        y: 0
-        width: window.recordingActive ? 0 : window.width
-        height: window.recordingActive ? 0 : window.height
-    }
 
     // ---- selection state, in this window's local (logical-pixel)
     // space, matching whatever coordinate space `screen` reports ----
@@ -144,10 +146,14 @@ PanelWindow {
     }
 
     // ---- screenshot ----
-    // Hide everything first (this window AND the controls bar, both
-    // bound to window.panelVisible) so our own UI never ends up in
-    // the shot, then wait one short beat for the compositor to
-    // actually stop compositing it before calling grim.
+    // Hide this window first so our own UI never ends up in the shot,
+    // then wait a beat for the compositor to actually finish
+    // unmapping/recompositing before calling grim. Since this
+    // namespace never has no_screen_share applied, there's no risk of
+    // an unmap-timing race blacking out the whole shot the way there
+    // would be if the rule targeted this fullscreen window - worst
+    // case here if the delay is ever too short is our own overlay
+    // showing through faintly, not a corrupted capture.
     Process {
         id: screenshotProc
         command: ["bash", "-c",
@@ -158,7 +164,7 @@ PanelWindow {
 
     Timer {
         id: screenshotDelay
-        interval: 60
+        interval: 150
         onTriggered: screenshotProc.running = true
     }
 
@@ -208,6 +214,10 @@ PanelWindow {
     function startRecording() {
         if (!window.hasSelection)
             return;
+        // recordProc's command reads geometryString() at the moment
+        // .running is set true below - selX/Y/W/H are still whatever
+        // they were when you finished dragging, unaffected by this
+        // window unmapping itself right after.
         window.recordingActive = true;
         window.recordingPaused = false;
         window.elapsedSeconds = 0;
@@ -251,14 +261,17 @@ PanelWindow {
         id: overlay
         anchors.fill: parent
         window: window
-        // Once recording is actually rolling, hide the dimming and
-        // selection chrome entirely - there's nothing left to adjust,
-        // and it would otherwise just sit on top of your desktop for
-        // the whole recording.
-        visible: !window.recordingActive
     }
 
-    SnipControlsWindow {
+    SnipControls {
+        window: window
+    }
+
+    // Only ever mapped once this window has already fully unmapped
+    // (window.visible above is false as soon as recordingActive
+    // flips true) - never simultaneously visible with this one, so
+    // there's no cross-surface stacking order to fight over.
+    SnipRecordingBar {
         window: window
     }
 }
