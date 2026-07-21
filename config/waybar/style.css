@@ -1,0 +1,515 @@
+@import "colors/colors.css";
+
+* {
+    border: none;
+    border-radius: 0px;
+    font-family: "Adwaita Sans", "JetBrainsMono Nerd Font Propo", sans-serif;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+}
+
+#waybar {
+    border-radius: 10px;
+
+}
+
+window#waybar {
+
+    background: transparent;
+    border-radius: 10px;
+    border: 0px solid @bg1;
+    padding-top: 5px;
+}
+
+tooltip {
+    background: @bg0;
+    border: transparent;
+    border-radius: 12px;
+}
+
+tooltip label {
+    color: @fg;
+    padding: 6px;
+}
+
+.modules-left {
+    border-radius: 10px;
+    border: 6px solid #161616;
+
+    background: @bg0;
+
+    box-shadow: 0px 0px 6px 0px alpha(#000000, 0.8);
+    transition: background-color 0.5s;
+    margin-bottom: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 28px;
+    padding-right: 10px;
+    padding-left: 2px;
+}
+
+.modules-right {
+    border-radius: 10px;
+    border: 6px solid #161616;
+
+    background: @bg0;
+
+    box-shadow: 0px 0px 6px 0px alpha(#000000, 0.8);
+    transition: background-color 0.5s;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 28px;
+    padding-right: 10px;
+    padding-left: 2px;
+}
+
+.modules-center {
+    border-radius: 10px;
+    border: 6px solid #161616;
+
+    background: @bg0;
+    box-shadow: 0px 0px 6px 0px alpha(#000000, 0.8);
+    transition: background-color 0.5s;
+    padding-right: 5px;
+    padding-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#mpris {
+    color: @bg0;
+    background-color: @red;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0px 0px;
+    padding-left: 10px;
+    margin-left: 12px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 2px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#bluetooth {
+    min-width: 8px; /* adjust to your icon size */
+    min-height: 8px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#bluetooth.enabled,
+#bluetooth.on {
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/bluetooth.svg");
+}
+
+#bluetooth.connected {
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/headset.svg");
+}
+
+#bluetooth.disabled {
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/bluetooth_dim.svg");
+}
+
+#network {
+    padding-left: 10px;
+    padding-right: 0px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 2px; /* adjust to your icon size */
+    min-height: 2px;
+}
+
+#network.wifi {
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/wifi.svg");
+}
+
+#network.disconnected {
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/wifi_dim.svg");
+}
+
+#workspaces {
+    font-family: "Modulus Pro Semi Bold";
+    font-weight: bold;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    min-width: 10px;
+    min-height: 10px;
+}
+
+#workspaces button {
+    padding: 0px 8px 0px 0px;
+    margin: 0px 4px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 8px; /* adjust to your icon size */
+    min-height: 4px;
+    border-radius: 40px;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/ws-alt.svg");
+
+    color: transparent;
+    transition: all 0.25s ease;
+    font-family: "JetBrains Mono Nerd Font";
+    font-weight: 600;
+}
+
+#workspaces button.active {
+    min-width: 45px;
+    min-height: 10px;
+    /* Large gradient for smooth movement */
+    background: linear-gradient(
+        45deg,
+        alpha(#1d3bff, 0.9) 0%,
+        @blue 40%,
+        @blue 60%,
+        alpha(#1d3bff, 0.9) 100%
+    );
+    background-size: 300% 300%;
+
+    color: transparent;
+    border-radius: 9999px;
+    animation: gradient_f 8s ease-in-out infinite;
+    transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+@keyframes gradient_f {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#workspaces button:hover {
+    background-color: @bg1;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: transparent;
+    border-radius: 16px;
+    min-width: 25px;
+    background-size: 400% 400%;
+    transition: all 0.3s ease-in-out;
+}
+
+#custom-vol {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 0px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 2px; /* adjust to your icon size */
+    min-height: 2px;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/vol.svg");
+}
+
+#custom-bb {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 0px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 2px; /* adjust to your icon size */
+    min-height: 2px;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/bb.svg");
+}
+
+#backlight,
+#pulseaudio {
+    color: @fg;
+    background-color: @bg1;
+    border-radius: 40px;
+    font-weight: bolder;
+    padding: 0px 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#custom-menu {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px; /* or 'cover' */
+    min-width: 20px; /* adjust to your icon size */
+    min-height: 20px;
+    color: @bg0;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/menu.svg");
+    padding: 5px 10px;
+    margin-right: 5px;
+    border-radius: 40px;
+    font-family: "Modulus Pro Semi Bold";
+    font-size: 1000;
+}
+
+#custom-pwr {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30px; /* or 'cover' */
+    min-width: 20px; /* adjust to your icon size */
+    min-height: 20px;
+    color: @bg0;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/Power.svg");
+    padding: 5px 10px;
+    border-radius: 40px;
+    font-family: "Modulus Pro Semi Bold";
+    font-size: 1000;
+}
+
+#window label {
+    font-family: "Modulus Pro Semi Bold";
+}
+#window {
+    color: @bg0;
+    background-color: @green;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0px 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 5px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#custom-clock {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 0px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 2px; /* adjust to your icon size */
+    min-height: 2px;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/clock.svg");
+}
+
+#custom-date {
+    margin-left: 5px;
+    padding-left: 20px;
+    padding-right: 0px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 19px; /* or 'cover' */
+    min-width: 2px; /* adjust to your icon size */
+    min-height: 2px;
+    background-image: url("file:///home/shaurya/.config/waybar/Icons/calendar.svg");
+}
+
+#clock.time {
+    color: @fg;
+    background-color: @bg1;
+    border-radius: 40px;
+    font-weight: bolder;
+    padding: 0px 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#clock.date {
+    color: @fg;
+    background-color: @bg1;
+    border-radius: 40px;
+    font-weight: bolder;
+    padding: 0px 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#battery {
+    color: @fg;
+    background-color: @bg1;
+    border-radius: 40px;
+    font-weight: bolder;
+    padding: 0px 0px;
+    padding-left: 15px;
+    padding-right: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#custom-battery {
+    color: @fg;
+    background-color: @bg1;
+    border-radius: 40px;
+    font-weight: bolder;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-family: "Modulus Pro Semi Bold";
+    padding: 4px 10px;
+    padding-left: 10px;
+
+    padding-right: 36px; /* space for icon */
+    font-size: 13.5px;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 8px) center;
+    background-size: 22px 13px; /* tweak to taste */
+}
+
+/* ==================== NORMAL ==================== */
+#custom-battery.normal-0   { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/0.svg'); }
+#custom-battery.normal-20  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/20.svg'); }
+#custom-battery.normal-40  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/40.svg'); }
+#custom-battery.normal-60  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/60.svg'); }
+#custom-battery.normal-80  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/80.svg'); }
+#custom-battery.normal-100 { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/100.svg'); }
+
+/* ==================== CHARGING ==================== */
+#custom-battery.charging-0   { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/0.svg'); }
+#custom-battery.charging-20  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/20.svg'); }
+#custom-battery.charging-40  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/40.svg'); }
+#custom-battery.charging-60  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/60.svg'); }
+#custom-battery.charging-80  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/80.svg'); }
+#custom-battery.charging-100 { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/100.svg'); }
+
+
+#disk {
+    background-image: linear-gradient(to right, @bgX, @bgX);
+    padding-left: 20px;
+    padding-right: 25px;
+    border-radius: 50px;
+    color: @aqua;
+    font-family: "JetBrains Mono Nerd Font";
+    margin: 5px 0px 5px 5px;
+    font-weight: bolder;
+}
+
+#cpu {
+    background-image: linear-gradient(to right, @bgX, @bgX);
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 50px;
+    color: @red;
+    font-family: "JetBrains Mono Nerd Font";
+    margin: 5px 0px 5px 10px;
+    font-weight: bolder;
+}
+
+#memory {
+    background-image: linear-gradient(to right, @bgX, @bgX);
+    padding-left: 20px;
+    padding-right: 25px;
+    border-radius: 50px;
+    color: @purple;
+    font-family: "JetBrains Mono Nerd Font";
+    margin: 5px 0px 5px 10px;
+    font-weight: bolder;
+}
+
+#custom-quicksettings {
+    color: @bg0;
+    background-color: @yellow;
+    border-radius: 40px;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 0px 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 10px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#tray {
+    background-color: @bg0;
+    border-radius: 4px;
+    padding: 0 15px;
+    margin: 5px 0 5px 5px;
+}
+
+#tray > .active {
+    color: @fg;
+}
+
+#tray > .passive {
+    color: @fg;
+}
+
+#pulseaudio-slider {
+    background-color: transparent;
+    padding: 5px 10px;
+    margin: 0px 0px 0px 0px;
+    border-radius: 50px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#pulseaudio-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#pulseaudio-slider trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+    background: #212132;
+}
+#pulseaudio-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, #b4befe, @green);
+}
+
+#backlight-slider {
+    background-color: transparent;
+    padding: 5px 5px;
+    margin: 0 10px 0 0;
+    border-radius: 80px;
+    font-family: "Modulus Pro Semi Bold";
+}
+
+#backlight-slider slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+#backlight-slider trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+    background: #212132;
+}
+#backlight-slider highlight {
+    min-width: 10px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right, @red, @red);
+}
+
+#custom-logo {
+    font-weight: bolder;
+    font-size: large;
+}

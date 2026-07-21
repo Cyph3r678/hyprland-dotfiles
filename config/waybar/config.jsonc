@@ -1,0 +1,256 @@
+{
+  "reload_style_on_change": true,
+  "position": "top",
+  "spacing": 0,
+  "min-height": 0,
+  "margin-left": -10,
+  "margin-right": -10,
+  "margin-top": 10,
+  "margin-bottom": 0,
+  "border-radius": 10,
+
+  "modules-left": [
+    "custom/menu",
+    "hyprland/window",
+    "custom/clock",
+    "clock#time",
+    "custom/date",
+    "clock#date",
+  ],
+
+  "modules-center": [
+    "custom/battery",
+    "hyprland/workspaces",
+    "network",
+    "bluetooth",
+    "custom/pwr",
+  ],
+
+  "modules-right": [
+    "custom/vol",
+    "pulseaudio",
+    "custom/bb",
+    "backlight",
+    "mpris",
+    "custom/quicksettings",
+  ],
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "Screen - {percent}%",
+    "format-icons": ["", "<span size='11000'>󰃛</span>"],
+  },
+
+  "bluetooth": {
+    "format": "     ", // several spaces to reserve space for the icon
+    "format-disabled": "   ",
+    "format-connected": "   ",
+    "interval": 5,
+    "tooltip-format": "Bluetooth {status}\n{device_enumerate}",
+  },
+
+  "cpu": {
+    "interval": 10,
+    "format": "{}% ",
+    "max-length": 10,
+  },
+
+  "disk": {
+    "interval": 30,
+    "format": "{percentage_free}% ",
+    "path": "/",
+  },
+
+  "clock#time": {
+    "interval": 60,
+    "on-click": "qs -c zshell ipc call widgets toggle",
+    "format": "{:%H : %M %p}",
+    "max-length": 25,
+  },
+
+  "clock#date": {
+    "format": "{:%a, %d %b %Y}", // e.g. 01 Jul 2026
+    "on-click": "qs -c zshell ipc call widgets toggle",
+    "tooltip-format": "{:%a, %d %B %Y}\nWeek {:%V}",
+    "interval": 60,
+  },
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "1": "-",
+      "2": "水",
+      "3": "風",
+      "4": "土",
+      "5": "雷",
+      "6": "氷",
+      "7": "光",
+      "8": "闇",
+      "9": "空",
+      "10": "無",
+    },
+    "persistent-workspaces": {
+      "*": 5, // 5 workspaces by default on every monitor
+      "HDMI-A-1": 3, // but only three on HDMI-A-1
+    },
+  },
+  "hyprland/window": {
+    "format": "{title}",
+    "max-length": 10,
+    "rewrite": {
+      "^\\s*$": "  Desktop", // empty or only whitespace
+      "^-$": "No Window",
+      "^ - $": "No Window",
+      "^\\s*-\\s*$": "No Window",
+      "~": "󰆍  Kitty Terminal",
+      " - ": "-", // if no window is focused, a single dash is displayed, this removes it
+      "(.*?) - Chromium - chromium": "  $1 ",
+      "(.*chrome)...(.*)": "  $1 ",
+      "(.*) - Obsidian - .* - obsidian": "  $1 ",
+      "(.*nvim)...(.*)": "  $2 ",
+      "(.*code) - (.*)": " 󰨞 $1 ",
+      "^.*btop( .*|$)": " 󰧨 BTOP $1 ",
+      "^.*cmatrix( .*|$)": " 󰘨 MATRIX $1 ",
+      "(.*) - Spotify": "  $1 ",
+      "(.*) - com.mitchellh.ghostty": " 󰊠 $1 ",
+      "(.*) - Alacritty": "   $1 ",
+      "(.*) - BeeperTexts": " 󰻞  $1 ",
+      "(.*Discord)...(.*).. (.*)": "  $2 ",
+      "(.*) - org.gnome.Nautilus": " 󰣆 $1 ",
+      "(.*) - fish": "  [$1] ",
+      "(.*Steam)...(.*)": "  $1 ",
+      "(.*) - com.obsproject.Studio": "  $1 ",
+    },
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10,
+    "icons": {
+      "blueman": "bluetooth",
+      "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png",
+    },
+  },
+  "pulseaudio": {
+    "format": "Vol. - {volume}%",
+    "format-bluetooth": "Vol. - {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "<span size='11500'></span>",
+      "hands-free": ".",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [".", ""],
+    },
+    "scroll-step": 1,
+    "on-click": "pavucontrol",
+    "ignored-sinks": ["Easy Effects Sink"],
+  },
+  "network": {
+    "interface": "wlp2s0",
+    "format": "{ifname}",
+    "format-wifi": "    ",
+    "format-ethernet": "{ipaddr}/{cidr} 󰊗",
+    "format-disconnected": "    ", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+  },
+  "battery": {
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "<span size='11pt'>{capacity}% {icon}</span>",
+    "format-icons": ["", "", "", "", ""],
+    "max-length": 25,
+  },
+  "custom/quicksettings": {
+    "format": "Quick Settings",
+    "on-click": "qs -c zshell ipc call quicksettings toggle",
+    "tooltip": false,
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+  },
+  "custom/clock": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "",
+  },
+
+  "custom/date": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "",
+  },
+
+  "custom/vol": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "",
+  },
+
+  "custom/bb": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "",
+  },
+
+  "custom/menu": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "qs -c zshell ipc call dock toggle",
+  },
+
+  "custom/pwr": {
+    "format": "<span size='12000'>    </span>",
+    "tooltip": false,
+    "on-click": "qs -c zshell ipc call powermenu toggle",
+  },
+
+  "backlight/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal",
+    "device": "intel_backlight",
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{}% <span size='10500'></span>",
+    "max-length": 25,
+  },
+
+  "mpris": {
+    "format": "{player_icon} {title}",
+    "format-paused": "{status_icon} {title}",
+    "tooltip": false,
+    "status-icons": {
+      "paused": "<span size='11000'>󰏤</span>",
+      "playing": "󰎈",
+    },
+    "player-icons": {
+      "default": "󰎈",
+      "spotify": "󰓇 ",
+      "io": "󰫔",
+      "firefox": "",
+    },
+    "max-length": 10,
+    "tooltip-format": "{status_icon} {title} - {artist} - {player}",
+  },
+
+  "custom/battery": {
+      "interval": 1,
+      "return-type": "json",
+      "exec": "/home/shaurya/.config/waybar/scripts/battery.sh",
+      "format": "{}",
+      "tooltip": true,
+      "on-click": "qs -c zshell ipc call battery toggle"
+  }
+}

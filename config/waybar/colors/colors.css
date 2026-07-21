@@ -1,0 +1,12 @@
+@define-color bg0 #191919;
+@define-color bg1 #252525;
+@define-color bgX #191919;
+
+@define-color red #fa456c;
+@define-color yellow #eba86d;
+@define-color green #49bd7d;
+@define-color aqua #387bdf;
+@define-color blue #7769fa;
+@define-color purple #944edf;
+
+@define-color fg alpha(#E8E8E8, 1);
