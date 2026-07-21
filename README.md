@@ -22,3 +22,8 @@ Thanks for coming!
 <h1>Workspaces</h1>
 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9ec63f90-274e-4888-8d39-535c5849fd8b" />
+
+
+<h1>App launcher</h1>
+
+<img src="previews/walker.png" width="1920" height="1080"/>
