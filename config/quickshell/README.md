@@ -1,4 +1,5 @@
-// Changelogs:
+<h3>Changelogs:</h3>
+
 Working on a new screencapture utility in modules/Snip {Functional}
 
 <img width="1920" height="1080" alt="Image" src="https://github.com/user-attachments/assets/9e549c7c-26ab-4421-973e-2c6d961f2b49" />
