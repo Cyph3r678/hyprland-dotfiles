@@ -26,4 +26,3 @@ Thanks for coming!
 
 <h1>App launcher</h1>
 
-<img src="previews/walker.png" width="1920" height="1080"/>
