@@ -106,15 +106,15 @@ tooltip label {
 
 #bluetooth.enabled,
 #bluetooth.on {
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/bluetooth.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/bluetooth.svg");
 }
 
 #bluetooth.connected {
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/headset.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/headset.svg");
 }
 
 #bluetooth.disabled {
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/bluetooth_dim.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/bluetooth_dim.svg");
 }
 
 #network {
@@ -128,11 +128,11 @@ tooltip label {
 }
 
 #network.wifi {
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/wifi.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/wifi.svg");
 }
 
 #network.disconnected {
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/wifi_dim.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/wifi_dim.svg");
 }
 
 #workspaces {
@@ -155,7 +155,7 @@ tooltip label {
     min-width: 8px; /* adjust to your icon size */
     min-height: 4px;
     border-radius: 40px;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/ws-alt.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/ws-alt.svg");
 
     color: transparent;
     transition: all 0.25s ease;
@@ -216,7 +216,7 @@ tooltip label {
     background-size: 19px; /* or 'cover' */
     min-width: 2px; /* adjust to your icon size */
     min-height: 2px;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/vol.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/vol.svg");
 }
 
 #custom-bb {
@@ -228,7 +228,7 @@ tooltip label {
     background-size: 19px; /* or 'cover' */
     min-width: 2px; /* adjust to your icon size */
     min-height: 2px;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/bb.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/bb.svg");
 }
 
 #backlight,
@@ -252,7 +252,7 @@ tooltip label {
     min-width: 20px; /* adjust to your icon size */
     min-height: 20px;
     color: @bg0;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/menu.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/menu.svg");
     padding: 5px 10px;
     margin-right: 5px;
     border-radius: 40px;
@@ -267,7 +267,7 @@ tooltip label {
     min-width: 20px; /* adjust to your icon size */
     min-height: 20px;
     color: @bg0;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/Power.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/Power.svg");
     padding: 5px 10px;
     border-radius: 40px;
     font-family: "Modulus Pro Semi Bold";
@@ -301,7 +301,7 @@ tooltip label {
     background-size: 19px; /* or 'cover' */
     min-width: 2px; /* adjust to your icon size */
     min-height: 2px;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/clock.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/clock.svg");
 }
 
 #custom-date {
@@ -313,7 +313,7 @@ tooltip label {
     background-size: 19px; /* or 'cover' */
     min-width: 2px; /* adjust to your icon size */
     min-height: 2px;
-    background-image: url("file:///home/shaurya/.config/waybar/Icons/calendar.svg");
+    background-image: url("file:///home/$USER/.config/waybar/Icons/calendar.svg");
 }
 
 #clock.time {
@@ -374,20 +374,20 @@ tooltip label {
 }
 
 /* ==================== NORMAL ==================== */
-#custom-battery.normal-0   { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/0.svg'); }
-#custom-battery.normal-20  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/20.svg'); }
-#custom-battery.normal-40  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/40.svg'); }
-#custom-battery.normal-60  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/60.svg'); }
-#custom-battery.normal-80  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/80.svg'); }
-#custom-battery.normal-100 { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/n/100.svg'); }
+#custom-battery.normal-0   { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/0.svg'); }
+#custom-battery.normal-20  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/20.svg'); }
+#custom-battery.normal-40  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/40.svg'); }
+#custom-battery.normal-60  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/60.svg'); }
+#custom-battery.normal-80  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/80.svg'); }
+#custom-battery.normal-100 { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/n/100.svg'); }
 
 /* ==================== CHARGING ==================== */
-#custom-battery.charging-0   { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/0.svg'); }
-#custom-battery.charging-20  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/20.svg'); }
-#custom-battery.charging-40  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/40.svg'); }
-#custom-battery.charging-60  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/60.svg'); }
-#custom-battery.charging-80  { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/80.svg'); }
-#custom-battery.charging-100 { background-image: url('file:///home/shaurya/.config/waybar/Icons/bat/c/100.svg'); }
+#custom-battery.charging-0   { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/0.svg'); }
+#custom-battery.charging-20  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/20.svg'); }
+#custom-battery.charging-40  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/40.svg'); }
+#custom-battery.charging-60  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/60.svg'); }
+#custom-battery.charging-80  { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/80.svg'); }
+#custom-battery.charging-100 { background-image: url('file:///home/$USER/.config/waybar/Icons/bat/c/100.svg'); }
 
 
 #disk {
