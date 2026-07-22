@@ -248,7 +248,7 @@
   "custom/battery": {
       "interval": 1,
       "return-type": "json",
-      "exec": "/home/shaurya/.config/waybar/scripts/battery.sh",
+      "exec": "scripts/battery.sh",
       "format": "{}",
       "tooltip": true,
       "on-click": "qs -c zshell ipc call battery toggle"
