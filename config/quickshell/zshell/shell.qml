@@ -11,6 +11,8 @@ import "./modules/Widgets"
 import "./services"
 import "./modules/Battery"
 import "./modules/Snip"
+import "./modules/Wallpaper"
+
 
 // Every Quickshell config starts from one ShellRoot.
 // It's not a visual element - it just holds everything else together.
@@ -39,6 +41,14 @@ ShellRoot {
         function hide(): void {
             root.panelVisible = false;
         }
+    }
+
+    IpcHandler {
+
+    target: "wallpaper"
+    function toggle(): void { wallpaperWindow.toggle(); }
+    function show(): void { wallpaperWindow.show(); }
+    function hide(): void { wallpaperWindow.hide(); }
     }
 
     // This is what your Hyprland brightness/volume keybinds talk to:
@@ -95,6 +105,8 @@ ShellRoot {
             powerMenu.hide();
         }
     }
+
+
 
     // This is what you'd wire a waybar button (or a keybind) to:
     //   qs -c QSpanel ipc call dock toggle
@@ -207,4 +219,7 @@ ShellRoot {
     BatteryWindow { id: batteryWindow }
 
     SnipWindow { id: snipWindow }
+    
+    WallpaperWindow { id: wallpaperWindow }
+
 }
