@@ -8,7 +8,7 @@
 
 <h2>Grid View</h2>
 
-<img width="1920" height="1080" alt="Image" src="changelogs/grid.png">
+<img width="1920" height="1080" alt="Image" src="changelogs/image.png">
 
 <h2>Card View</h2>
 
