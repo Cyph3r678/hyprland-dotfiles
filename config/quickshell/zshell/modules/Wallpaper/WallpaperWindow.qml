@@ -37,7 +37,7 @@ PanelWindow {
         // so they survive a config reload instead of silently
         // resetting back to defaults - that's what was actually
         // happening whenever a reload occurred while this was open.
-        property string currentDir: "~/Pictures/Wallpapers"
+        property string currentDir: "~/Pictures/Wallpapers/Anime"
         property bool gridView: false
 
         Behavior on openProgress {
@@ -220,8 +220,12 @@ PanelWindow {
         Keys.onEscapePressed: window.hide()
         Keys.onReturnPressed: window.applySelected()
         Keys.onEnterPressed: window.applySelected()
-        Keys.onLeftPressed: window.selectIndex(window.currentIndex - 1)
-        Keys.onRightPressed: window.selectIndex(window.currentIndex + 1)
+        Keys.onLeftPressed: window.gridView
+            ? window.selectIndex(window.currentIndex - 1)
+            : wallpaperCarousel.step(-1)
+        Keys.onRightPressed: window.gridView
+            ? window.selectIndex(window.currentIndex + 1)
+            : wallpaperCarousel.step(1)
         Keys.onUpPressed: if (window.gridView) window.selectIndex(window.currentIndex - window.gridColumns)
         Keys.onDownPressed: if (window.gridView) window.selectIndex(window.currentIndex + window.gridColumns)
 
@@ -246,14 +250,14 @@ PanelWindow {
                     z: -1
                     shadowEnabled: true
                     shadowColor: "#000000"
-                    shadowBlur: 0.8
-                    shadowOpacity: 0.6
+                    shadowBlur: 1
+                    shadowOpacity: 1
                 }
 
                 Rectangle {
                     id: leftBg
                     anchors.fill: parent
-                    radius: 16
+                    radius: 8
                     color: Colors.bg0
                 }
 
@@ -265,7 +269,7 @@ PanelWindow {
                     Rectangle {
                         Layout.preferredWidth: 32
                         Layout.preferredHeight: 32
-                        radius: 10
+                        radius: 5
                         color: Colors.bg2
 
                         Image {
@@ -281,7 +285,7 @@ PanelWindow {
                     Rectangle {
                         Layout.preferredHeight: 32
                         Layout.preferredWidth: countText.implicitWidth + 20
-                        radius: 10
+                        radius: 5
                         color: Colors.bg2
 
                         Text {
@@ -300,7 +304,7 @@ PanelWindow {
                     Rectangle {
                         Layout.preferredHeight: 32
                         Layout.preferredWidth: 220
-                        radius: 10
+                        radius: 5
                         color: Colors.bg2
 
                         TextInput {
@@ -325,8 +329,8 @@ PanelWindow {
 
             // center: search
             Item {
-                Layout.rightMargin: 264
-                Layout.preferredWidth: 320
+                Layout.rightMargin: 100
+                Layout.preferredWidth: 400
                 Layout.preferredHeight: 48
 
                 MultiEffect {
@@ -335,14 +339,14 @@ PanelWindow {
                     z: -1
                     shadowEnabled: true
                     shadowColor: "#000000"
-                    shadowBlur: 0.8
-                    shadowOpacity: 0.6
+                    shadowBlur: 1
+                    shadowOpacity: 1
                 }
 
                 Rectangle {
                     id: searchBg
                     anchors.fill: parent
-                    radius: 16
+                    radius: 8
                     color: Colors.bg0
                 }
 
@@ -382,14 +386,14 @@ PanelWindow {
                     z: -1
                     shadowEnabled: true
                     shadowColor: "#000000"
-                    shadowBlur: 0.8
-                    shadowOpacity: 0.6
+                    shadowBlur: 1
+                    shadowOpacity: 1
                 }
 
                 Rectangle {
                     id: switchBg
                     anchors.fill: parent
-                    radius: 16
+                    radius: 8
                     color: Colors.bg0
                 }
 
@@ -419,7 +423,9 @@ PanelWindow {
         // both being correct upstream). Direct property binding here
         // is the same pattern already proven to work everywhere else
         // in this project.
+
         WallpaperCarousel {
+            id: wallpaperCarousel
             anchors.top: topBar.bottom
             anchors.bottom: parent.bottom
             anchors.left: parent.left

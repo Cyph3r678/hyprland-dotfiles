@@ -7,13 +7,14 @@ import "../../services"
 Item {
     id: root
     required property var window
-
+    
     GridView {
         id: grid
         anchors.fill: parent
+        anchors.topMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 0
-        clip: false
+        anchors.margins: 24
+        clip: true
         highlightMoveDuration: 150
 
         readonly property int columns: Math.max(3, Math.round(width / 100))
@@ -21,7 +22,7 @@ Item {
         readonly property real vSpacing: 100
 
         cellWidth: 534
-        cellHeight: 300
+        cellHeight: 320
 
         model: root.window.filteredImages
         currentIndex: root.window.currentIndex

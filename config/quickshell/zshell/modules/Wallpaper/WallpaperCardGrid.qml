@@ -1,5 +1,8 @@
 import QtQuick
 import QtQuick.Effects
+import Quickshell.Widgets
+import Quickshell.Io
+import QtQuick.Layouts
 import "../../services"
 
 // Individual grid card: locked to 16:9 (real wallpaper proportions),
@@ -29,25 +32,35 @@ Item {
         shadowBlur: 1
         shadowOpacity: 0.7
     }
+    MultiEffect {
+        source: card
+        anchors.fill: card
+        z: -1
+        shadowColor: "#000000"
+        shadowBlur: 1
+        shadowOpacity: 0.7
+    }
 
-    Rectangle {
+    ClippingRectangle {
         id: card
         anchors.fill: parent
-        radius: 6
+        anchors.margins: 20
+        radius: 12
         color: "#161616"
         border.width: root.isCurrent ? 3 : 0
-        border.color: "#ffffff"
+        border.color: Colors.fg
         antialiasing: true
         clip: true
 
         Image {
+            id: img
             anchors.fill: parent
-            anchors.margins: root.isCurrent ? 3 : 0 // keeps the image inside the border, not under it
+            anchors.margins: root.isCurrent ? 0 : 0 // keeps the image inside the border, not under it
             source: root.imagePath
             fillMode: Image.PreserveAspectCrop
             asynchronous: true
-            sourceSize.width: 285
-            sourceSize.height: 160
+            sourceSize.width: 800
+            sourceSize.height: 550
             smooth: true
         }
     }
@@ -59,9 +72,9 @@ Item {
         // ambiguity from anchoring across the scale boundary.
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: 20
         radius: 8
-        color: "#ffffff"
+        color: Colors.fg
         height: 24
         width: nameText.implicitWidth + 16
 
