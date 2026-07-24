@@ -66,7 +66,7 @@ Item {
                 smooth: true
                 mipmap: false
                 anchors.fill: parent
-                source: "../../assets/icons/wpcardmask.png"
+                source: "../../assets/wallpaper/frame.png"
                 visible: false
             }
 
@@ -81,18 +81,10 @@ Item {
             Image {
                 anchors.fill: parent
                 visible: root.isCurrent
-                source: "../../assets/icons/wpcardframe.png"
+                source: "../../assets/icons/stroke.png"
                 fillMode: Image.Stretch
                 smooth: true
             }
-
-            Rectangle {
-                anchors.fill: img
-                color: "transparent"
-                border.width: root.isCurrent ? 5 : 0
-                border.color: "transparent"
-            }
-
         }
 
         MultiEffect {
