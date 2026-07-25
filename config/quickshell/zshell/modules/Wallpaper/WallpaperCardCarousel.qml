@@ -8,6 +8,7 @@ Item {
 
     required property string imagePath
     required property bool isCurrent
+    property bool settled: true
     readonly property int baseWidth: 300
     readonly property int baseHeight: 380
     // How aggressively the card leans - this is a plain horizontal
@@ -20,8 +21,8 @@ Item {
     signal clicked()
     signal doubleClicked()
 
-    implicitWidth: isCurrent ? Math.round(baseWidth * 1.9) : Math.round(baseWidth * 0.85)
-    implicitHeight: isCurrent ? Math.round(baseHeight * 1.85) : Math.round(baseHeight * 0.9)
+    implicitWidth: isCurrent ? Math.round(baseWidth * 1.9) : Math.round(baseWidth * 1.25)
+    implicitHeight: isCurrent ? Math.round(baseHeight * 1.85) : Math.round(baseHeight * 1.2)
     anchors.verticalCenter: parent ? parent.verticalCenter : undefined
 
     // Carries the shear transform ONLY - `card` and the shadow's
@@ -48,14 +49,27 @@ Item {
             // the stair-stepping.
             layer.enabled: false
             layer.smooth: true
-            layer.textureSize: Qt.size(width * 3, height * 3)
+            layer.textureSize: root.settled
+                ? Qt.size(width * 3, height * 3)
+                : Qt.size(width, height)
+
 
             Image {
                 id: img
-
                 anchors.fill: parent
                 source: root.imagePath
                 fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+                cache: true
+                // Fixed decode target (not bound to the animated
+                // width/height) - decodes once at a size big enough
+                // for the largest (current-card) display, then the
+                // GPU scales it for neighbor sizes. Binding this to
+                // `width` directly would re-decode on every resize
+                // animation frame, which is worse than not setting it
+                // at all.
+                sourceSize.width: root.baseWidth * 2
+                sourceSize.height: root.baseHeight * 2
                 visible: false
             }
 
@@ -75,27 +89,35 @@ Item {
                 source: img
                 maskSource: mask
                 layer.enabled: true
-                layer.textureSize: Qt.size(width * 4, height * 4)
+                layer.textureSize: root.settled
+                    ? Qt.size(width * 4, height * 4)
+                    : Qt.size(width, height)
             }
 
             Image {
                 anchors.fill: parent
                 visible: root.isCurrent
-                source: "../../assets/icons/stroke.png"
+                source: "../../assets/wallpaper/stroke.png"
                 fillMode: Image.Stretch
                 smooth: true
             }
+
+
         }
 
         MultiEffect {
             source: card
             anchors.fill: card
             z: -1
-            shadowEnabled: true
+            // The blur pass is the single most expensive thing here -
+            // skip it entirely while still moving, only pay for it
+            // once things stop.
+            shadowEnabled: root.settled
             shadowColor: "#000000"
             shadowBlur: 1
             shadowOpacity: 1
-            blurMax: 40
+            blurMax: 20
+            blurMultiplier: 1.5 
         }
 
     }

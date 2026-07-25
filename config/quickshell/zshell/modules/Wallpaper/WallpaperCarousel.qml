@@ -16,13 +16,34 @@ Item {
         readonly property int repeatCount: 100
         readonly property int imageCount: root.window.filteredImages.length
 
+        readonly property int centerCardWidth: Math.round(300 * 1.9)
+        readonly property int centerCardHeight: Math.round(380 * 1.85)
+        readonly property int neighborCardWidth: Math.round(300 * 1.15)
+        readonly property int bleedPadding: 140
+
+        readonly property int visibleWidth:
+            centerCardWidth + neighborCardWidth * 2 + spacing * 2 + bleedPadding
+
         function realIndex(i) {
             return ((i % imageCount) + imageCount) % imageCount
+        }
+        
+
+        property bool settled: true
+
+        Timer {
+            id: settleTimer
+            interval: 180
+            onTriggered: list.settled = true
         }
 
         function step(delta) {
             if (imageCount === 0)
                 return
+            
+
+            list.settled = false
+            settleTimer.restart()
 
             list.currentIndex += delta
             root.window.selectIndex(list.realIndex(list.currentIndex))
@@ -38,20 +59,28 @@ Item {
             }
         }
 
-        anchors.centerIn: parent
-        width: parent.width
-        height: 380
+        
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        width: Math.min(parent.width, visibleWidth)
+        // Full parent height, not a fixed 380 - the current card's
+        // real height (703) was always taller than 380, it just went
+        // unclipped before. Only width needs to be tightly bounded to
+        // cap the card count at 3.
+        height: parent.height
+        clip: true
 
         orientation: ListView.Horizontal
-        spacing: 40
+        spacing: 140
 
         model: imageCount * repeatCount
 
         interactive: false
 
         highlightRangeMode: ListView.StrictlyEnforceRange
-        preferredHighlightBegin: width / 2 - 170
-        preferredHighlightEnd: width / 2 + 170
+        preferredHighlightBegin: width / 2 - centerCardWidth / 2
+        preferredHighlightEnd: width / 2 + centerCardWidth / 2
         highlightMoveDuration: 220
 
 
@@ -66,10 +95,14 @@ Item {
             required property int index
 
             property int actualIndex: list.realIndex(index)
+            property int distance: index - list.currentIndex
 
             imagePath: root.window.filteredImages[actualIndex]
 
             isCurrent: index === list.currentIndex
+
+            settled: list.settled
+            opacity: Math.max(0, 1 - Math.abs(distance) * 0.05)
 
             onClicked: {
                 list.currentIndex = index

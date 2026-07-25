@@ -174,37 +174,104 @@ PanelWindow {
     // Slides down from off-screen above into place - everything
     // (background preview, top bar, both views) lives inside this so
     // it all moves together as one piece.
-    Item {
-        id: slideContainer
-        anchors.fill: parent
-        y: (1 - persist.openProgress) * -height
-
-        // ---- background: blurred, dimmed live preview of the
-        // selected image, filling the whole window behind everything
-        // else ----
-        // Restored - the earlier segfaults turned out to be caused by
-        // the top bar's MultiEffects being children of their own
-        // source (a genuinely malformed scenegraph relationship, now
-        // fixed), not this blur. This one was always a proper sibling
-        // of bgImage, so it was never actually the problem - it just
-        // got pulled defensively while the real cause was still
-        // unidentified.
-        Image {
-            id: bgImage
+    // ---- background: blurred, dimmed live preview of the
+        // selected image ----
+        // Two alternating image slots instead of one - swapping a
+        // single Image's source directly leaves it pixmap-less for
+        // the duration of the async decode, which is what caused the
+        // flash-to-transparent on every selection change. Whichever
+        // slot just finished loading fades in on top; the other stays
+        // put underneath until it's replaced by the next selection.
+        Item {
+            id: bgContainer
             anchors.fill: parent
-            source: window.currentImage
-            fillMode: Image.PreserveAspectCrop
-            asynchronous: true
-        }
 
-        MultiEffect {
-            anchors.fill: parent
-            source: bgImage
-            blurEnabled: window.currentImage !== ""
-            blur: 1.0
-            blurMax: 64
-            autoPaddingEnabled: false
-        }
+            property bool activeIsA: true
+            property string pendingSource: ""
+
+            function updateSource(path) {
+                if (path === pendingSource)
+                    return;
+                pendingSource = path;
+                if (activeIsA) {
+                    bgImageB.source = path;
+                } else {
+                    bgImageA.source = path;
+                }
+            }
+
+            Connections {
+                target: window
+                function onCurrentImageChanged() {
+                    bgContainer.updateSource(window.currentImage);
+                }
+            }
+
+            Component.onCompleted: {
+                bgImageA.source = window.currentImage;
+                pendingSource = window.currentImage;
+            }
+
+            Image {
+                id: bgImageA
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+                opacity: bgContainer.activeIsA ? 1 : 0
+                visible: opacity > 0
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 260; easing.type: Easing.OutCubic }
+                }
+
+                onStatusChanged: {
+                    if (status === Image.Ready && source !== "" && !bgContainer.activeIsA) {
+                        bgContainer.activeIsA = true;
+                    }
+                }
+            }
+
+            Image {
+                id: bgImageB
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectCrop
+                asynchronous: true
+                opacity: bgContainer.activeIsA ? 0 : 1
+                visible: opacity > 0
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 260; easing.type: Easing.OutCubic }
+                }
+
+                onStatusChanged: {
+                    if (status === Image.Ready && source !== "" && bgContainer.activeIsA) {
+                        bgContainer.activeIsA = false;
+                    }
+                }
+            }
+
+            MultiEffect {
+                anchors.fill: parent
+                source: bgImageA
+                visible: bgImageA.opacity > 0
+                blurEnabled: bgImageA.source !== ""
+                blur: 1.0
+                blurMax: 64
+                autoPaddingEnabled: false
+                opacity: bgImageA.opacity
+            }
+
+            MultiEffect {
+                anchors.fill: parent
+                source: bgImageB
+                visible: bgImageB.opacity > 0
+                blurEnabled: bgImageB.source !== ""
+                blur: 1.0
+                blurMax: 64
+                autoPaddingEnabled: false
+                opacity: bgImageB.opacity
+            }
+        
 
         Rectangle {
             anchors.fill: parent
@@ -330,7 +397,7 @@ PanelWindow {
             // center: search
             Item {
                 Layout.rightMargin: 100
-                Layout.preferredWidth: 400
+                Layout.preferredWidth: 320
                 Layout.preferredHeight: 48
 
                 MultiEffect {
@@ -346,13 +413,29 @@ PanelWindow {
                 Rectangle {
                     id: searchBg
                     anchors.fill: parent
-                    radius: 8
+                    radius: 32
                     color: Colors.bg0
+                }
+
+                Image {     
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.leftMargin: 20
+                            
+                            source: Qt.resolvedUrl("../../assets/wallpaper/search.svg")
+                            width: 16
+                            height: 16
+                            verticalAlignment: TextInput.AlignVCenter
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
                 }
 
                 TextInput {
                     anchors.fill: parent
+                    anchors.left: parent.left
                     anchors.margins: 16
+                    anchors.leftMargin: 50
                     verticalAlignment: TextInput.AlignVCenter
                     color: Colors.fg
                     font.pixelSize: 14
@@ -366,7 +449,7 @@ PanelWindow {
                         text: "Search...."
                         font.family: Colors.fontFamily
                         color: Colors.fg
-                        opacity: 0.4
+                        opacity: 0.5
                         font.pixelSize: 14
                         visible: parent.text === ""
                     }
@@ -378,7 +461,7 @@ PanelWindow {
             // right: switch view
             Item {
                 Layout.preferredHeight: 48
-                Layout.preferredWidth: switchText.implicitWidth + 32
+                Layout.preferredWidth: switchText.implicitWidth + 64
 
                 MultiEffect {
                     source: switchBg
@@ -391,22 +474,56 @@ PanelWindow {
                 }
 
                 Rectangle {
+
+                    HoverHandler {
+                      id: cardHover
+                    }
+
                     id: switchBg
                     anchors.fill: parent
                     radius: 8
-                    color: Colors.bg0
+                    color: (cardHover.hovered || switchArea.pressed)
+                          ? "#272727"
+                          : Colors.bg0
+                    
+
+                         Behavior on color {
+                           ColorAnimation {
+                          duration: 120
+                                }
+                        }
+                }
+
+                Image {     
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.leftMargin: 18
+                            
+                            source: Qt.resolvedUrl("../../assets/wallpaper/switch.svg")
+                            width: 16
+                            height: 16
+                            verticalAlignment: TextInput.AlignVCenter
+                            fillMode: Image.PreserveAspectFit
+                            smooth: true
                 }
 
                 Text {
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
+                    anchors.leftMargin: 45
                     id: switchText
-                    anchors.centerIn: parent
+                    anchors.fill: parent
                     text: "Switch view"
+                    verticalAlignment: TextInput.AlignVCenter
                     font.family: Colors.fontFamily
                     color: Colors.fg
                     font.pixelSize: 13
                 }
 
                 MouseArea {
+                    id: switchArea
                     anchors.fill: parent
                     onClicked: window.gridView = !window.gridView
                 }
