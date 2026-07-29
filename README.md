@@ -32,3 +32,11 @@ Thanks for coming!
 
 <img src="previews/walker.png" width="1920" height="1080"/>
 
+
+
+
+<h1>Wallpaper</h1>
+
+
+<img src="config/quickshell/changelogs/grid.png" width="1920" height="1080"/>
+
