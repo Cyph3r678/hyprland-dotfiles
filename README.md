@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="Image" src="assets/banner.png" />
+<img width="1920" height="1080" alt="Image" src="assets/" />
 
 
 Hello! I'm Cypher, and this is my personal Hyprland rice repository.
