@@ -37,7 +37,7 @@ Thanks for coming!
 
 
 
-<h1>Wallpaper</h1>
+<h1>Wallpaper Picker</h1>
 
 
 <img src="config/quickshell/changelogs/grid.png" width="1920" height="1080"/>
