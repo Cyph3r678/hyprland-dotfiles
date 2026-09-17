@@ -8,7 +8,7 @@ Please keep in mind that i'm still learning Quickshell so the code might not be 
 
 Thanks for coming! 
 
-<h3>Previews:</h3>
+<h3>⭐Previews:</h3>
 
 <h1>Desktop</h1>
 
